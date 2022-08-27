@@ -6,6 +6,7 @@ import { ImageGallery } from 'components/ImageGallery/ImageGallery';
 
 
 
+
 export class App extends Component {
 
   state = {
@@ -29,6 +30,7 @@ export class App extends Component {
         {this.state.loading && <h2>Loading...</h2>}
         <Searchbar onFormSubmit={this.hendleFormSubmit}>Gallery</Searchbar>
         <ImageGallery searchQuery={this.state.searchQuery} />
+         
         <ToastContainer />
       </Box>
     );

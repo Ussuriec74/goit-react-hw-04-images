@@ -1,6 +1,7 @@
 import { Component } from 'react';
-import { BiSearch } from 'react-icons';
+import { IoMdSearch } from 'react-icons/io';
 import { toast } from 'react-toastify';
+import { SeachBar, SearchForm, SearchFormBtn, SearchFormBtnLabel, SearchFormInput } from 'components/Searchbar/Searchbar.styled';
 
 export class Searchbar extends Component {
 
@@ -26,13 +27,14 @@ export class Searchbar extends Component {
 
   render() {
     return (
-      <header className="searchbar">
-        <form className="form" onSubmit={this.handleSubmit}>
-          <button type="submit" className="button">
-            <span className="button-label">Search</span>
-          </button>
+      <SeachBar>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchFormBtn type="submit" className="button">
+            <IoMdSearch size='2em' />
+            <SearchFormBtnLabel>Search</SearchFormBtnLabel>
+          </SearchFormBtn>
 
-          <input
+          <SearchFormInput
             value={this.state.searchQuery}
             className="input"
             type="text"
@@ -41,8 +43,8 @@ export class Searchbar extends Component {
             placeholder="Search images and photos"
             onChange={this.handleSearchQueryChange}
           />
-        </form>
-      </header>
+        </SearchForm>
+      </SeachBar>
     )
   }
 }

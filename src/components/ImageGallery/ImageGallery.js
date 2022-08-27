@@ -1,7 +1,10 @@
 import { Component } from "react";
 import axios from 'axios';
 import { Box } from 'components/Box';
-import {GalleryItem} from 'components/ImageGalleryItem/ImageGalleryItem';
+import { GalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
+import { Modal } from 'components/Modal/Modal';
+import { Gallery } from 'components/ImageGallery/ImageGallery.styled';
+import { Button } from 'components/Button/Button';
 
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const KEY = "28299403-f4195b0bf13d94bdbb03a95af";
@@ -13,6 +16,7 @@ export class ImageGallery extends Component {
   state = {
     images: [],
     page: 1,
+    showModal: false,
   }
    
   async fetchImages() {
@@ -31,26 +35,53 @@ export class ImageGallery extends Component {
       this.setState((prevState) => {
         const { images } = prevState;
         return {
+          ...prevState,
           images: [...images, ...data.hits],
+
         }
       });
     }
   }
+
+  onClickLoadMoreBtn = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1,
+    }))
+  }
+
+  openModal = (largeImageURL, tags) => {
+    this.setState({ largeImageURL, tags, showModal: true });
+  };
+
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
   
   render() {
-    const { images = [] } = this.state;
-    debugger;
+    const {images, showModal} = this.state;
     return (
-      <Box as='ul'>
-        {images.map(({ id, tags, webformatURL, largeImageURL }) => {
-          <GalleryItem
-            key={id}
-            tags={tags}
-            galleryImage={webformatURL}
-            modalImage={largeImageURL}
-          />
-        })}
+      <Box>
+        <Gallery>
+          {images.map(({ id, tags, webformatURL, largeImageURL }) => (
+            <GalleryItem
+              key={id}
+              tags={tags}
+              galleryImage={webformatURL}
+              modalImage={largeImageURL}
+              openModal={this.openModal} 
+            />
+          ))}
+        </Gallery>
+        <Button handleClick={this.onClickLoadMoreBtn}></Button>
+        {showModal && (
+          <Modal
+            onClose={this.closeModal}
+            tags={images.tags}
+            modalImage={images.largeImageURL}/>
+        )}
+
       </Box>
+      
     );
   }
 }
