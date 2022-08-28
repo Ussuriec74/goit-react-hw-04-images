@@ -12,6 +12,7 @@ import { ModalImage } from 'components/Modal/Modal.styled';
 
 axios.defaults.baseURL = 'https://pixabay.com/api';
 const KEY = "28299403-f4195b0bf13d94bdbb03a95af";
+const params = "image_type=photo&orientation=horizontal&safesearch=true&per_page=20";
 
 
 export class ImageGallery extends Component {
@@ -33,7 +34,7 @@ export class ImageGallery extends Component {
     const { page } = this.state;
     try {
       this.setState({ isLoding: true });
-      const response = await axios.get(`/?key=${KEY}&q='${this.props.searchQuery}'&image_type=photo&orientation=horizontal&safesearch=true&page=${page}&per_page=8`);
+      const response = await axios.get(`/?key=${KEY}&q='${this.props.searchQuery}'&page=${page}&${params}`);
 
       if (page === 1 && response.data.totalHits !== 0) {
           Notify.success(` We found ${response.data.totalHits} images.`);
