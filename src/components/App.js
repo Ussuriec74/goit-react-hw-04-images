@@ -9,8 +9,6 @@ import { ModalImage } from 'components/Modal/Modal.styled';
 import { Button } from 'components/Button/Button';
 
 
-
-
 export const App = () => {
 
   const isMounted = useRef(false);
