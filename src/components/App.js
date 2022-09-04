@@ -78,7 +78,6 @@ export const App = () => {
       setPage(prevPage => prevPage + 1);
     };
   
-
   return (
     <Box>      
         <Searchbar onFormSubmit={handleFormSubmit}>Gallery</Searchbar>
