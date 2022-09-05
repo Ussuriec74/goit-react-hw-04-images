@@ -11,7 +11,6 @@ import { Button } from 'components/Button/Button';
 
 export const App = () => {
 
-  const isMounted = useRef(false);
   const [images, setImages] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [page, setPage] = useState(1);
@@ -22,22 +21,18 @@ export const App = () => {
   const [tags, setTags] = useState('');
 
   useEffect(() => {
+    if (page === 1 && !searchQuery) {
+      return;
+    }
+    fetchNewImages(searchQuery, page);
+  }, [page, searchQuery]);
+
+  const handleFormSubmit = searchQuery => {
     setImages([]);
     setSearchQuery(searchQuery);
     setPage(1);
     setError('');
     setShowModal(false);
-  }, [searchQuery]);
-
-  useEffect(() => {
-    if (isMounted.current) {
-      fetchNewImages(searchQuery, page);
-    }
-    isMounted.current = true;
-  }, [ page, searchQuery]);
-
-  const handleFormSubmit = searchQuery => {
-     setSearchQuery( searchQuery );
   }
   
   const fetchNewImages = async (searchQuery = '', page = 1) => {
