@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { fetchImages } from '../../src/servises/pixabayApi';
 import { Box } from 'components/Box';
 import { Loader } from 'components/Loader/Loader';
